@@ -7,7 +7,7 @@ from django.contrib.auth.decorators import login_required
 # Create your views here.
 
 def login_user(request):
-    return render(request, 'login.html')
+    return render(request, 'app/login.html')
 
 @csrf_protect
 def submit_login(request):
@@ -20,11 +20,11 @@ def submit_login(request):
             return redirect('/')
         else:
             messages.error(request, 'Usuario e/ou senha errados')
-    return redirect('/login')
+    return redirect('/')
 
 @login_required(login_url='/login')
 def index(request):
-    return render (request, 'index.html')
+    return render (request, 'app/index.html')
 
 def logout_user(request):
     logout(request)

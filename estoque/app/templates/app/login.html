@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <!-- Required meta tags -->
+    <title>Estoque</title>
+    {% load static %}
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" type="text/css" href="{% static 'app/css/bootstrap/bootstrap.min.css' %}">
+    <!-- CSS -->
+    <link rel="stylesheet" type="text/css" href="{% static 'app/css/login.css' %}">
+    <!-- Favicon -->
+    <link rel="icon" href="">
+
+</head>
+
+<body class="text-center">
+    <form class="form-signin" action="submit" method="post"> {% csrf_token %}
+        <h1 class="font-weight-bold">Estoque</h1>
+        <div class="col-sm">
+            <div class="checkbox mb-3">
+                <!-- apagar dps -->
+            </div>
+        </div>
+        <label for="username" class="sr-only">Usuario</label>
+        <input id="username" name="username" type="text" class="form-control" placeholder="Usuário" required autofocus>
+        <label for="password" class="sr-only">Senha</label>
+        <input id="password" name="password" type="password" class="form-control" placeholder="Senha" required>
+        
+        <div class="row">
+            <div class="col-sm">
+            </div>
+            <div class="col-sm">
+                <div class="checkbox mb-3">
+                    <!-- apagar dps -->
+                </div>
+            </div>
+        </div>
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Entrar</button>
+        
+        {% for message in messages %}
+        <div class="col-sm">
+        </div>
+        <div class="col-sm">
+            <div class="checkbox mb-3">
+                <!-- apagar dps -->
+            </div>
+        </div>
+        <div class="alert alert-primary" role="alert">
+            <strong>{{ message }}</strong> 
+        </div>
+        {% endfor %}
+        <p class="mt-5 mb-3 text-muted">&copy; aaaaaaaaaa</p>
+    </form>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="{% static 'app/js/jquery-3.4.1.min.js' %}"></script>
+    <script src="{% static 'app/js/popper.min.js'%}"></script>
+    <script src="{% static 'app/js/bootstrap.min.js'%}"></script>
+
+</body>
+
+</html>
