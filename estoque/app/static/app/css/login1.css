@@ -1,25 +1,17 @@
-.mtitle {
-    color: #000;
-  }
-  .mtitle:hover {
-    color: #000;
-  }
-  
-  html,
-  body {
-    height: 100%;
-  }
-  
-  body {
+body {
     display: -ms-flexbox;
     display: flex;
     -ms-flex-align: center;
     align-items: center;
     padding-top: 40px;
     padding-bottom: 40px;
-    background-color: #f5f5f5;
   }
-  
+
+  html,
+  body {
+    height: 100%;
+  }
+
   .form-signin {
     width: 100%;
     max-width: 330px;
@@ -50,3 +42,10 @@
     border-top-right-radius: 0;
   }
   
+  .h1 {
+    color: red;
+  }
+
+  .logo{
+    margin-right: 5px;
+  }

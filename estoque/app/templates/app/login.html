@@ -12,7 +12,7 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" type="text/css" href="{% static 'app/css/bootstrap/bootstrap.min.css' %}">
     <!-- CSS -->
-    <link rel="stylesheet" type="text/css" href="{% static 'app/css/login.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'app/css/login1.css' %}">
     <!-- Favicon -->
     <link rel="icon" href="">
 
@@ -20,7 +20,10 @@
 
 <body class="text-center">
     <form class="form-signin" action="submit" method="post"> {% csrf_token %}
-        <h1 class="font-weight-bold">Estoque</h1>
+        <div class="logo">
+        <img src="{% static 'app/img/icone.png' %}" alt="">
+        </div>
+        <h1 class="font-weight-bold">Auto-Peças</h1>
         <div class="col-sm">
             <div class="checkbox mb-3">
                 <!-- apagar dps -->
@@ -40,7 +43,7 @@
                 </div>
             </div>
         </div>
-        <button class="btn btn-lg btn-primary btn-block" type="submit">Entrar</button>
+        <button class="btn btn-lg btn-danger btn-block" type="submit">Entrar</button>
         
         {% for message in messages %}
         <div class="col-sm">
@@ -54,7 +57,7 @@
             <strong>{{ message }}</strong> 
         </div>
         {% endfor %}
-        <p class="mt-5 mb-3 text-muted">&copy; aaaaaaaaaa</p>
+        <p class="mt-5 mb-3 text-muted">&copy; GG Auto-Peças</p>
     </form>
 
     <!-- Optional JavaScript -->
