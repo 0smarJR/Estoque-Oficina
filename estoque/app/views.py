@@ -3,6 +3,7 @@ from django.views.decorators.csrf import csrf_protect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from .models import Produto
 
 # Create your views here.
 
@@ -23,9 +24,15 @@ def submit_login(request):
     return redirect('/')
 
 @login_required(login_url='/login')
-def index(request):
+def home(request):
     return render (request, 'app/index.html')
 
 def logout_user(request):
     logout(request)
     return redirect('/login')
+
+@login_required(login_url='/login')
+def produto_list(request):
+    objects = Produto.objects.all()
+    context = {'object_list': objects}
+    return render (request, 'app/produto_list.html', context)
