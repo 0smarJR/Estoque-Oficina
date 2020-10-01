@@ -10,7 +10,7 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" type="text/css" href="{% static 'app/css/bootstrap/bootstrap.min.css' %}">
     <!-- CSS -->
-    <link rel="stylesheet" type="text/css" href="{% static 'app/css/index.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'app/css/produto.css' %}">
     <!-- Favicon -->
     <link rel="icon" href="{% static 'app/img/icn.png' %}">
     
@@ -26,8 +26,7 @@
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
             <div class="container">
 
-                <img src="{% static 'app/img/icn.png' %}" alt="some text" width=65 height=45>
-                <a class="navbar-brand" href="#">Auto-Peças</a>
+                <a class="navbar-brand" href="{% url 'home' %}"><img src="{% static 'app/img/icn.png' %}" alt="some text" width=65 height=45>Auto-Peças</a>
 
                 <div class="collapse navbar-collapse" id="navbarsExample07">
                     {% if user.is_authenticated %}
@@ -37,7 +36,7 @@
   
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
                             <a class="dropdown-item" href="#">Perfil</a>
-                            <a class="dropdown-item" href="logout">Log out</a>
+                            <a class="dropdown-item" href="{% url 'logout' %}">Log out</a>
                         </div>
                     </div>
                     {% endif %}
@@ -49,8 +48,8 @@
 
         <nav class="site-header">
             <div class="container d-flex flex-column flex-md-row justify-content-between">
-                <a class="py-2 d-none d-md-inline-block" href="#">Home</a>
-                <a class="py-2 d-none d-md-inline-block" href="products">Produtos</a>
+                <a class="py-2 d-none d-md-inline-block" href="{% url 'home' %}">Home</a>
+                <a class="py-2 d-none d-md-inline-block" href="{% url 'products' %}">Produtos</a>
                 <a class="py-2 d-none d-md-inline-block" href="#">Entrada de Produtos</a>
                 <a class="py-2 d-none d-md-inline-block" href="#">Saída de Produtos</a>
             </div>

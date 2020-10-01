@@ -36,3 +36,9 @@ def produto_list(request):
     objects = Produto.objects.all()
     context = {'object_list': objects}
     return render (request, 'app/produto_list.html', context)
+
+@login_required(login_url='/login')
+def produto(request, id):
+    obj = Produto.objects.get(id=id)
+    context = {'object': obj}
+    return render (request, 'app/produto.html', context)

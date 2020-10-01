@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.urls import reverse_lazy
 
 # Create your models here.
 class Produto(models.Model):
@@ -15,6 +16,9 @@ class Produto(models.Model):
 
     class Meta:
         db_table = 'produto'
+
+    def get_absolute_url(self):
+        return reverse_lazy('produto', kwargs={'id': self.id})
 
 class TimeStampedModel(models.Model):
     created = models.DateField('criado em', auto_now_add=True, auto_now=False)

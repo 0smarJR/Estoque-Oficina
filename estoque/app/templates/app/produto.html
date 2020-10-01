@@ -27,7 +27,7 @@
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
             <div class="container">
 
-              <a class="navbar-brand" href="{% url 'home' %}"><img src="{% static 'app/img/icn.png' %}" alt="some text" width=65 height=45>Auto-Peças</a>
+                <a class="navbar-brand" href="{% url 'home' %}"><img src="{% static 'app/img/icn.png' %}" alt="some text" width=65 height=45>Auto-Peças</a>
 
                 <div class="collapse navbar-collapse" id="navbarsExample07">
                   {% if user.is_authenticated %}
@@ -59,64 +59,52 @@
         </nav>
 
     </header>
-  <body>
-    <main role="main">
-
+    <body>
         <section class="jumbotron text-center">
-            <div class="">
-                <h1>Produtos</h1>
-                {% if object_list %}
-                <table class="table table-striped">
-                    <thead>
-                      <tr>
-                        <th>ID</th>
-                        <th>Nome</th>
-                        <th>Marca</th>
-                        <th>Preço</th>
-                        <th class="text-center">Quantidade</th>
-                        <th>Ativo</th>
-                        <th>Ações</th>
-                      </tr>
-                    </thead>
+            <div class="container">
+            <h1>{{ object }}</h1>
+                <span class=""><a href=""><button type="button" class="btn btn-dark"><span class="fa fa-pencil"></span> Editar</button></a></span>
+                <span class=""><a href=""><button type="button" class="btn btn-danger"><span class="fa fa-trash"></span> Apagar</button></a></span>
+                <br>
+                <br>
+                <table class="table table-user-information">
                     <tbody>
-                      {% for object in object_list %}
-                        <tr>
-                          <td>{{ object.id }}</td>
-                          <td><a href="{% url 'produto' object.id %}">{{ object.nome }}</a></td>
-                          <td>{{ object.marca }}</td>
-                          <td>R$ {{ object.preco }}</span></td>
-                          <td class="text-center">{{ object.quantidade }}</td>
-                          <td>
-                            {% if object.ativo %}
-                              <i class="fa fa-check-circle ok"></i>
-                            {% else %}
-                              <i class="fa fa-minus-circle no"></i>
-                            {% endif %}
-                          </td>
-                          <td><span class=""><a href=""><button type="button" class="btn btn-dark"><span class="fa fa-pencil"></span></button></a></span>
-                            <span class=""><a href=""><button type="button" class="btn btn-danger"><span class="fa fa-trash"></span></button></a></span></td>
-                        </tr>
-                      {% endfor %}
+                      <tr>
+                        <th class="">Ativo</th>
+                        <td>
+                          {% if object.ativo %}
+                            <i class="fa fa-check-circle ok"></i>
+                          {% else %}
+                            <i class="fa fa-minus-circle no"></i>
+                          {% endif %}
+                        </td>
+                      </tr>
+                      <tr>
+                        <th class="">Marca</th>
+                        <td>{{ object.marca }}</td>
+                      </tr>
+                      <tr>
+                        <th class="">Preço</th>
+                        <td>R$ {{ object.preco }}</td>
+                      </tr>
+                      <tr>
+                        <th class="">Quantidade</th>
+                        <td>{{ object.quantidade }}</td>
+                      </tr>
                     </tbody>
                   </table>
-                {% else %}
-                  <p class="alert alert-warning">Sem itens na lista.</p>
-                {% endif %}
             </div>
         </section>
-
-    </main>
-    <footer class="text-muted">
-        <div class="container">
-            <p class="float-right">
-                <a href="#">Back to top</a>
-            </p>
-        </div>
-    </footer>
-
-    <script src="{% static 'app/js/jquery-3.4.1.min.js' %}"></script>
-    <script src="{% static 'app/js/popper.min.js'%}"></script>
-    <script src="{% static 'app/js/bootstrap.min.js'%}"></script>
-  </body>
-
-</html
+        
+        <footer class="text-muted">
+            <div class="container">
+                <p class="float-right">
+                    <a href="#">Back to top</a>
+                </p>
+            </div>
+        </footer>
+    
+        <script src="{% static 'app/js/jquery-3.4.1.min.js' %}"></script>
+        <script src="{% static 'app/js/popper.min.js'%}"></script>
+        <script src="{% static 'app/js/bootstrap.min.js'%}"></script>
+    </body>
