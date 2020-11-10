@@ -63,8 +63,8 @@
         <section class="jumbotron text-center">
             <div class="container">
             <h1>{{ object }}</h1>
-                <span class=""><a href=""><button type="button" class="btn btn-dark"><span class="fa fa-pencil"></span> Editar</button></a></span>
-                <span class=""><a href=""><button type="button" class="btn btn-danger"><span class="fa fa-trash"></span> Apagar</button></a></span>
+                <span class=""><a href="/products/register/?id={{ object.id }}"><button type="button" class="btn btn-dark"><span class="fa fa-pencil"></span> Editar</button></a></span>
+                <span class=""><a href="/products/delete/{{ object.id }}"><button type="button" class="btn btn-danger"><span class="fa fa-trash"></span> Apagar</button></a></span>
                 <br>
                 <br>
                 <table class="table table-user-information">

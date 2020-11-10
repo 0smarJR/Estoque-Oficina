@@ -63,8 +63,12 @@
     <main role="main">
 
         <section class="jumbotron text-center">
+          <div class="page-header">
+            <h1>Produtos</h1>
+            <span class=""><a href="{% url 'produto_register' %}"><button type="button" class="btn btn-dark"><span class="fa fa-plus"></span> Adicionar</button></a></span>
+          </div>
+          <div><br></div>
             <div class="">
-                <h1>Produtos</h1>
                 {% if object_list %}
                 <table class="table table-striped">
                     <thead>
@@ -93,8 +97,8 @@
                               <i class="fa fa-minus-circle no"></i>
                             {% endif %}
                           </td>
-                          <td><span class=""><a href=""><button type="button" class="btn btn-dark"><span class="fa fa-pencil"></span></button></a></span>
-                            <span class=""><a href=""><button type="button" class="btn btn-danger"><span class="fa fa-trash"></span></button></a></span></td>
+                          <td><span class=""><a href="/products/register/?id={{ object.id }}"><button type="button" class="btn btn-dark"><span class="fa fa-pencil"></span></button></a></span>
+                            <span class=""><a href="/products/delete/{{ object.id }}"><button type="button" class="btn btn-danger"><span class="fa fa-trash"></span></button></a></span></td>
                         </tr>
                       {% endfor %}
                     </tbody>
