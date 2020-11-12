@@ -1,11 +1,14 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, resolve_url
 from django.views.decorators.csrf import csrf_protect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.views.generic import CreateView
-from .models import Produto
-from .forms import ProdutoForm
+from .models import Produto, Estoque, EstoqueItens
+from .forms import ProdutoForm, EstoqueForm, EstoqueItensForm
+from django.http import HttpResponseRedirect
+from django.forms import inlineformset_factory
+
 
 # Create your views here.
 
@@ -84,4 +87,49 @@ def set_produto(request):
         produto = Produto.objects.create(nome=nome, codigo=codigo, marca=marca, quantidade=quantidade, preco=preco, ativo=ativo)
     url = '/products/{}' .format(produto.id)
     return redirect(url)
+
+@login_required(login_url='/login')
+def estoque_entrada_list(request):
+    template_name = 'app/estoque_entrada_list.html'
+    objects = Estoque.objects.filter(movimento='e')
+    context={'object_list': objects}
+    return render(request, template_name, context)
+
+@login_required(login_url='/login')
+def estoque_entrada_detail(request, id):
+    template_name = 'app/estoque_entrada_detail.html'
+    obj = Estoque.objects.get(id=id)
+    context={'object': obj}
+    return render(request, template_name, context)
+
+@login_required(login_url='/login')
+def estoque_entrada_add(request):
+    template_name = 'app/estoque_entrada_form.html'
+    estoque_form = Estoque()
+    item_estoque_formset = inlineformset_factory(
+        Estoque,
+        EstoqueItens,
+        form=EstoqueItensForm,
+        extra=0,
+        min_num=1,
+        validate_min=True,
+    )
+    if request.method == 'POST':
+        form = EstoqueForm(request.POST, instance=estoque_form, prefix='main')
+        formset = item_estoque_formset(
+            request.POST,
+            instance=estoque_form,
+            prefix='estoque'
+        )
+        if form.is_valid() and formset.is_valid():
+            form = form.save()
+            formset.save()
+            url = 'estoque_entrada_detail'
+            return HttpResponseRedirect(resolve_url(url, form.pk))
+    else:
+        form = EstoqueForm(instance=estoque_form, prefix='main')
+        formset = item_estoque_formset(instance=estoque_form, prefix='estoque')
+
+    context = {'form': form, 'formset': formset}
+    return render(request, template_name, context)
 
