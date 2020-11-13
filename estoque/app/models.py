@@ -20,6 +20,13 @@ class Produto(models.Model):
     def get_absolute_url(self):
         return reverse_lazy('produto', kwargs={'id': self.id})
 
+    def to_dict_json(self):
+        return {
+            'pk': self.pk,
+            'produto': self.nome,
+            'estoque': self.quantidade,
+        }
+
 class TimeStampedModel(models.Model):
     created = models.DateField('criado em', auto_now_add=True, auto_now=False)
     modified = models.DateField('modificado em', auto_now=True, auto_now_add=False)

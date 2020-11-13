@@ -1,3 +1,4 @@
+from django.http import JsonResponse
 from django.shortcuts import render, redirect, resolve_url
 from django.views.decorators.csrf import csrf_protect
 from django.contrib.auth import authenticate, login, logout
@@ -132,4 +133,11 @@ def estoque_entrada_add(request):
 
     context = {'form': form, 'formset': formset}
     return render(request, template_name, context)
+
+@login_required(login_url='/login')
+def produto_json(request, pk):
+    ''' Retorna o produto, id e estoque. '''
+    produto = Produto.objects.filter(pk=pk)
+    data = [item.to_dict_json() for item in produto]
+    return JsonResponse({'data': data})
 
