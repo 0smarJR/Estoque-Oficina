@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.urls import reverse_lazy
+from .managers import EstoqueEntradaManager, EstoqueSaidaManager
 
 # Create your models here.
 class Produto(models.Model):
@@ -48,13 +49,31 @@ class Estoque(TimeStampedModel):
         ordering = ('-created',)
 
     def __str__(self):
-        return '{} | {} | {}'.format(self.pk, self.nf, self.created.strftime('%d-%m-%Y'))
+        return '{}'.format(self.nf)
 
     def get_absolute_url(self):
         return reverse_lazy('estoque_entrada_detail', kwargs={'id': self.id})
 
     def nf_formated(self):
         return str(self.nf).zfill(3)
+
+class EstoqueEntrada(Estoque):
+
+    objects = EstoqueEntradaManager()
+
+    class Meta:
+        proxy = True
+        verbose_name = 'estoque entrada'
+        verbose_name_plural = 'estoque entrada'
+
+class EstoqueSaida(Estoque):
+
+    objects = EstoqueSaidaManager()
+
+    class Meta:
+        proxy = True
+        verbose_name = 'estoque saída'
+        verbose_name_plural = 'estoque saída'
 
 class EstoqueItens(models.Model):
     estoque = models.ForeignKey(Estoque, on_delete=models.CASCADE, related_name='estoques')

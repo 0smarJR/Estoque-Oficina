@@ -5,7 +5,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.views.generic import CreateView
-from .models import Produto, Estoque, EstoqueItens
+from .models import Produto, Estoque, EstoqueItens, EstoqueEntrada, EstoqueSaida
 from .forms import ProdutoForm, EstoqueForm, EstoqueItensForm
 from django.http import HttpResponseRedirect
 from django.forms import inlineformset_factory
@@ -92,23 +92,23 @@ def set_produto(request):
 @login_required(login_url='/login')
 def estoque_entrada_list(request):
     template_name = 'app/estoque_entrada_list.html'
-    objects = Estoque.objects.filter(movimento='e')
+    objects = EstoqueEntrada.objects.all()
     context={'object_list': objects}
     return render(request, template_name, context)
 
 @login_required(login_url='/login')
 def estoque_entrada_detail(request, id):
     template_name = 'app/estoque_entrada_detail.html'
-    obj = Estoque.objects.get(id=id)
+    obj = EstoqueEntrada.objects.get(id=id)
     context={'object': obj}
     return render(request, template_name, context)
 
 @login_required(login_url='/login')
 def estoque_entrada_add(request):
     template_name = 'app/estoque_entrada_form.html'
-    estoque_form = Estoque()
+    estoque_form = EstoqueEntrada()
     item_estoque_formset = inlineformset_factory(
-        Estoque,
+        EstoqueEntrada,
         EstoqueItens,
         form=EstoqueItensForm,
         extra=0,
@@ -125,6 +125,7 @@ def estoque_entrada_add(request):
         if form.is_valid() and formset.is_valid():
             form = form.save()
             formset.save()
+            dar_baixa_estoque(form)
             url = 'estoque_entrada_detail'
             return HttpResponseRedirect(resolve_url(url, form.pk))
     else:
@@ -141,3 +142,16 @@ def produto_json(request, pk):
     data = [item.to_dict_json() for item in produto]
     return JsonResponse({'data': data})
 
+def dar_baixa_estoque(form):
+    produtos=form.estoques.all()
+    for item in produtos:
+        produto = Produto.objects.get(pk=item.produto.pk)
+        produto.quantidade = item.saldo
+        produto.save()
+
+@login_required(login_url='/login')
+def estoque_saida_list(request):
+    template_name = 'app/estoque_saida_list.html'
+    objects = EstoqueSaida.objects.all()
+    context={'object_list': objects}
+    return render(request, template_name, context)
