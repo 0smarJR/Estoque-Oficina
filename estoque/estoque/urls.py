@@ -16,7 +16,8 @@ urlpatterns = [
     path('products/<int:pk>/json/', views.produto_json, name='produto_json'),
     path('estoque/entrada', views.estoque_entrada_list, name='estoque_entrada'),
     path('estoque/entrada/<int:id>/', views.estoque_entrada_detail, name='estoque_entrada_detail'),
-    path('estoque/add/', views.estoque_entrada_add, name='estoque_entrada_add'),
-    path('estoque/saida/', views.estoque_saida_list, name='estoque_saida')
-        
+    path('estoque/entrada/add/', views.estoque_entrada_add, name='estoque_entrada_add'),
+    path('estoque/saida/', views.estoque_saida_list, name='estoque_saida'),
+    path('estoque/saida/<int:id>/', views.estoque_saida_detail, name='estoque_saida_detail'),
+    path('estoque/saida/add/', views.estoque_saida_add, name='estoque_saida_add'),
 ]

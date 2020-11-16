@@ -31,7 +31,9 @@ def submit_login(request):
 
 @login_required(login_url='/login')
 def home(request):
-    return render (request, 'app/index.html')
+    objects = Produto.objects.all()
+    context = {'object_list': objects}
+    return render (request, 'app/produto_list.html', context)
 
 def logout_user(request):
     logout(request)
@@ -106,9 +108,9 @@ def estoque_entrada_detail(request, id):
 @login_required(login_url='/login')
 def estoque_entrada_add(request):
     template_name = 'app/estoque_entrada_form.html'
-    estoque_form = EstoqueEntrada()
+    estoque_form = Estoque()
     item_estoque_formset = inlineformset_factory(
-        EstoqueEntrada,
+        Estoque,
         EstoqueItens,
         form=EstoqueItensForm,
         extra=0,
@@ -154,4 +156,43 @@ def estoque_saida_list(request):
     template_name = 'app/estoque_saida_list.html'
     objects = EstoqueSaida.objects.all()
     context={'object_list': objects}
+    return render(request, template_name, context)
+
+@login_required(login_url='/login')
+def estoque_saida_detail(request, id):
+    template_name = 'app/estoque_saida_detail.html'
+    obj = EstoqueSaida.objects.get(id=id)
+    context={'object': obj}
+    return render(request, template_name, context)
+
+@login_required(login_url='/login')
+def estoque_saida_add(request):
+    template_name = 'app/estoque_saida_form.html'
+    estoque_form = Estoque()
+    item_estoque_formset = inlineformset_factory(
+        EstoqueSaida,
+        EstoqueItens,
+        form=EstoqueItensForm,
+        extra=0,
+        min_num=1,
+        validate_min=True,
+    )
+    if request.method == 'POST':
+        form = EstoqueForm(request.POST, instance=estoque_form, prefix='main')
+        formset = item_estoque_formset(
+            request.POST,
+            instance=estoque_form,
+            prefix='estoque'
+        )
+        if form.is_valid() and formset.is_valid():
+            form = form.save()
+            formset.save()
+            dar_baixa_estoque(form)
+            url = 'estoque_saida_detail'
+            return HttpResponseRedirect(resolve_url(url, form.pk))
+    else:
+        form = EstoqueForm(instance=estoque_form, prefix='main')
+        formset = item_estoque_formset(instance=estoque_form, prefix='estoque')
+
+    context = {'form': form, 'formset': formset}
     return render(request, template_name, context)
