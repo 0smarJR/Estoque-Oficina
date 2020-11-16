@@ -1,0 +1,1 @@
+1 - estoque_entrada_form -> Ao dar erro pela primeira vez não tava mais o saldo

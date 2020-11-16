@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    {% load static %}
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" type="text/css" href="{% static 'app/css/bootstrap/bootstrap.min.css' %}">
+    <!-- CSS -->
+    <link rel="stylesheet" type="text/css" href="{% static 'app/css/produto.css' %}">
+    <!-- Favicon -->
+    <link rel="icon" href="{% static 'app/img/icn.png' %}">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    
+
+    <title>GG Auto-Peças - {% if produto %}Alterar Produto{% else %}Cadastrar Produto{% endif %}</title>
+
+</head>
+<body>
+
+    <header>
+
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <div class="container">
+
+                <a class="navbar-brand" href="{% url 'home' %}"><img src="{% static 'app/img/icn.png' %}" alt="some text" width=65 height=45>Auto-Peças</a>
+
+                <div class="collapse navbar-collapse" id="navbarsExample07">
+                  {% if user.is_authenticated %}
+                  <div class="dropdown">
+                      <a class="btn btn-danger dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> Olá, {{ user.username}}                       
+                      </a>
+
+                      <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                          <a class="dropdown-item" href="#">Perfil</a>
+                          <a class="dropdown-item" href="{% url 'logout' %}">Log out</a>
+                      </div>
+                  </div>
+                  {% endif %}
+                </div>
+
+                
+            </div>               
+            
+        </nav>
+
+
+        <nav class="site-header">
+            <div class="container d-flex flex-column flex-md-row justify-content-between">
+                <!--<a class="py-2 d-none d-md-inline-block" href="{% url 'home' %}">Home</a>-->
+                <a class="py-2 d-none d-md-inline-block" href="{% url 'products' %}">Produtos</a>
+                <a class="py-2 d-none d-md-inline-block" href="{% url 'estoque_entrada' %}">Entrada de Produtos</a>
+                <a class="py-2 d-none d-md-inline-block" href="{% url 'estoque_saida' %}">Saída de Produtos</a>
+            </div>
+        </nav>
+
+    </header>
+    <body>
+        <section class="jumbotron text-center">
+        {% if produto %}
+            <h1>Alterar Produto</h1>
+        {% else %}
+            <h1>Cadastrar Produto</h1>
+        {% endif %}
+            <br>
+            <form enctype="multipart/form-data" action="submit", method="POST">
+              {% csrf_token %}
+              <div class="container">
+                <input type="number" class="form-control" name="produto_id" value="{{ produto.id }}" hidden>
+                <div class="form-group">
+                  <div class="form-group">
+                    <h4><label for="nome">Nome</label></h4>
+                    <input type="text" class="form-control" name="nome" value="{{ produto.nome }}" required>
+                </div>
+                <div class="form-group">
+                  <h4><label for="nome">Código</label></h4>
+                  <input type="number" class="form-control" name="codigo" value="{{ produto.codigo }}">
+                </div>
+                <div class="form-group">
+                  <h4><label for="nome">Marca</label></h4>
+                  <input type="text" class="form-control" name="marca" value="{{ produto.marca }}">
+                </div>
+                  <div class="form-group">
+                    <h4><label for="nome">Quantidade</label></h4>
+                      <input type="number" class="form-control" name="quantidade" value="{{ produto.quantidade }}" required>
+                  </div>
+                  <div class="form-group">
+                    <h4><label for="preco">Preço:</label></h4>
+                      <input type="number" class="form-control" name="preco" value="{{ produto.preco }}" required>
+                  </div>
+                  {% if produto.ativo %}  
+                  <h4><label for="nome">Status</label></h4>  
+                  <div class="form-group form-check form-check-inline">                    
+                    <label class="form-check-label" for="status"><input name="status" type="radio" value="true" checked> Ativo</label>
+                  </div>
+                  <div class="form-group form-check form-check-inline">
+                    <label class="form-check-label" for="status"><input name="status" type="radio" value="false"> Inativo</label>
+                  </div>
+                  {% else %}
+                  <h4><label for="nome">Status</label></h4>  
+                  <div class="form-group form-check form-check-inline">                    
+                    <label class="form-check-label" for="status"><input name="status" type="radio" value="true"> Ativo</label>
+                  </div>
+                  <div class="form-group form-check form-check-inline">
+                    <label class="form-check-label" for="status"><input name="status" type="radio" value="false" checked> Inativo</label>
+                  </div>
+                  {% endif %}
+                  <br>
+                  <button type="submit" class="btn btn-dark">
+                      {% if produto %}
+                          Alterar
+                      {% else %}
+                          Cadastrar
+                      {% endif %}
+                  </button>
+              </div>
+            </form>
+        </section>
+        
+        <footer class="text-muted">
+            <div class="container">
+                <p class="float-right">
+                    <a href="#">Back to top</a>
+                </p>
+            </div>
+        </footer>
+    
+        <script src="{% static 'app/js/jquery-3.4.1.min.js' %}"></script>
+        <script src="{% static 'app/js/popper.min.js'%}"></script>
+        <script src="{% static 'app/js/bootstrap.min.js'%}"></script>
+    </body>

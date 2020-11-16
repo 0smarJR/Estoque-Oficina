@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    {% load static %}
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" type="text/css" href="{% static 'app/css/bootstrap/bootstrap.min.css' %}">
+    <!-- CSS -->
+    <link rel="stylesheet" type="text/css" href="{% static 'app/css/produto.css' %}">
+    <!-- Favicon -->
+    <link rel="icon" href="{% static 'app/img/icn.png' %}">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    
+
+    <title>GG Auto-Peças - Lista de Entradas de Produtos</title>
+
+</head>
+<body>
+
+    <header>
+
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <div class="container">
+
+              <a class="navbar-brand" href="{% url 'home' %}"><img src="{% static 'app/img/icn.png' %}" alt="some text" width=65 height=45>Auto-Peças</a>
+
+                <div class="collapse navbar-collapse" id="navbarsExample07">
+                  {% if user.is_authenticated %}
+                  <div class="dropdown">
+                      <a class="btn btn-danger dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> Olá, {{ user.username}}                       
+                      </a>
+
+                      <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                          <a class="dropdown-item" href="#">Perfil</a>
+                          <a class="dropdown-item" href="{% url 'logout' %}">Log out</a>
+                      </div>
+                  </div>
+                  {% endif %}
+                </div>
+
+                
+            </div>               
+            
+        </nav>
+
+
+        <nav class="site-header">
+            <div class="container d-flex flex-column flex-md-row justify-content-between">
+                <!--<a class="py-2 d-none d-md-inline-block" href="{% url 'home' %}">Home</a>-->
+                <a class="py-2 d-none d-md-inline-block" href="{% url 'products' %}">Produtos</a>
+                <a class="py-2 d-none d-md-inline-block" href="{% url 'estoque_entrada' %}">Entrada de Produtos</a>
+                <a class="py-2 d-none d-md-inline-block" href="{% url 'estoque_saida' %}">Saída de Produtos</a>
+            </div>
+        </nav>
+
+    </header>
+  <body>
+    <main role="main">
+
+        <section class="jumbotron text-center">
+          <div class="page-header">
+            <h1>Lista de Entradas de Produtos</h1>
+            <span class=""><a href="{% url 'estoque_entrada_add' %}"><button type="button" class="btn btn-dark"><span class="fa fa-plus"></span> Adicionar</button></a></span>
+          </div>
+          <div><br></div>
+            <div class="">
+                {% if object_list %}
+                <table class="table table-striped">
+                    <thead>
+                      <tr>
+                        <th>ID</th>
+                        <th>NF</th>
+                        <th>Data</th>
+                        <th>Funcionario</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {% for object in object_list %}
+                        <tr>
+                          <td>{{ object.id }}</td>
+                          <td><a href="{{ object.get_absolute_url }}">{{ object.nf_formated }}</a></td>
+                          <td>{{ object.created }}</span></td>
+                          <td>{{ object.usuario.username }}</td>
+                        </tr>
+                      {% endfor %}
+                    </tbody>
+                  </table>
+                {% else %}
+                  <p class="alert alert-warning">Sem itens na lista.</p>
+                {% endif %}
+            </div>
+        </section>
+
+    </main>
+    <footer class="text-muted">
+        <div class="container">
+            <p class="float-right">
+                <a href="#">Back to top</a>
+            </p>
+        </div>
+    </footer>
+
+    <script src="{% static 'app/js/jquery-3.4.1.min.js' %}"></script>
+    <script src="{% static 'app/js/popper.min.js'%}"></script>
+    <script src="{% static 'app/js/bootstrap.min.js'%}"></script>
+  </body>
+
+</html
