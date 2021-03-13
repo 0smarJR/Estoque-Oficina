@@ -11,22 +11,25 @@
     <link rel="stylesheet" type="text/css" href="{% static 'app/css/bootstrap/bootstrap.min.css' %}">
     <!-- CSS -->
     <link rel="stylesheet" type="text/css" href="{% static 'app/css/produto.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'app/css/estoque_saida_form.css' %}">
     <!-- Favicon -->
     <link rel="icon" href="{% static 'app/img/icn.png' %}">
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    
+
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
     <script src="{% static 'app/js/popper.min.js'%}"></script>
     <script src="{% static 'app/js/bootstrap.min.js'%}"></script>
+    <script src="{% static 'app/js/scripts/estoque_saida_form.js'%}"></script>
+    <style></style>
 
-    {% load widget_tweaks %}
-    {% load bootstrap %}
-    
+    {% load widget_tweaks %} {% load bootstrap %}
 
-    <title>GG Auto-Peças - Saida de Produtos</title>
+
+    <title>GG Parafusos - Saida de Produtos</title>
 
 </head>
+
 <body>
 
     <header>
@@ -34,25 +37,25 @@
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
             <div class="container">
 
-                <a class="navbar-brand" href="{% url 'home' %}"><img src="{% static 'app/img/icn.png' %}" alt="some text" width=65 height=45>Auto-Peças</a>
+                <a class="navbar-brand" href="{% url 'home' %}"><img src="{% static 'app/img/icn.png' %}" alt="some text" width=65 height=45>Parafusos</a>
 
                 <div class="collapse navbar-collapse" id="navbarsExample07">
-                  {% if user.is_authenticated %}
-                  <div class="dropdown">
-                      <a class="btn btn-danger dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> Olá, {{ user.username}}                       
+                    {% if user.is_authenticated %}
+                    <div class="dropdown">
+                        <a class="btn btn-danger dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> Olá, {{ user.username}}                       
                       </a>
 
-                      <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                          <a class="dropdown-item" href="#">Perfil</a>
-                          <a class="dropdown-item" href="{% url 'logout' %}">Log out</a>
-                      </div>
-                  </div>
-                  {% endif %}
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                            <a class="dropdown-item" href="#">Perfil</a>
+                            <a class="dropdown-item" href="{% url 'logout' %}">Log out</a>
+                        </div>
+                    </div>
+                    {% endif %}
                 </div>
 
-                
-            </div>               
-            
+
+            </div>
+
         </nav>
 
 
@@ -66,213 +69,80 @@
         </nav>
 
     </header>
+
     <body>
-    <section class="jumbotron text-center">
-      <div class="row">
-        <div class="cols">
-          <form method="POST" novalidate>
-            {% csrf_token %}
-            <legend style="border-bottom: 1px solid #e5e5e5;">Estoque Saída</legend>
+        <section class="jumbotron text-center">
             <div class="row">
-              <div class="col-sm-6">
-                {% for field in form.visible_fields %}
-                  <div class="form-group{% if field.errors %} has-error {% endif%}">
-                    <label for="{{ field.id_for_label }}">
+                <div class="cols">
+                    <form method="POST" novalidate>
+                        {% csrf_token %}
+                        <legend style="border-bottom: 1px solid #e5e5e5;">Estoque Saída</legend>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                {% for field in form.visible_fields %}
+                                <div class="form-group{% if field.errors %} has-error {% endif%}">
+                                    <label for="{{ field.id_for_label }}">
                       {% if field.field.required %}
                         <span class="required">{{ field.label }} </span>
                       {% else %}
                         {{ field.label }}
                       {% endif %}
-                    </label>
-                    {% render_field field class="form-control" %}
-                    {% for error in field.errors %}
-                      <span class="text-muted">{{ error }}</span>
-                    {% endfor %}
-                  </div>
-                {% endfor %}
-              {{ formset.management_form }}
-              </div>
-            </div>
+                    </label> {% render_field field class="form-control" %} {% for error in field.errors %}
+                                    <span class="text-muted">{{ error }}</span> {% endfor %}
+                                </div>
+                                {% endfor %} {{ formset.management_form }}
+                            </div>
+                        </div>
 
-            <div class="row">
-                <legend style="border-bottom: 1px solid #e5e5e5;">Produtos <span id="add-item" class="btn btn-dark" style="margin-bottom: 5px; font-size: 0.8rem;">
+                        <div class="row">
+                            <legend style="border-bottom: 1px solid #e5e5e5;">Produtos <span id="add-item" class="btn btn-dark" style="margin-bottom: 5px; font-size: 0.8rem;">
                     <i class="fa fa-plus"></i>
                   </span></legend>
-              <div class="col-sm-12">
-                <div id="estoque" class="form-inline">
-                  {% for item_estoque_form in formset %}
-                    <div id="item-{{ forloop.counter0 }}" class="form-group">
-                      {{ item_estoque_form|bootstrap }} <br>
-                    </div>                    
-                  {% endfor %}
-                  <p>&ensp;&ensp;</p>                  
-                </div>
-              </div>
-            </div>
+                            <div class="col-sm-12">
+                                <div id="estoque" class="form-inline">
+                                    {% for item_estoque_form in formset %}
+                                    <div id="item-{{ forloop.counter0 }}" class="form-group">
+                                        {{ item_estoque_form|bootstrap }} <br>
+                                    </div>
+                                    {% endfor %}
+                                    <p>&ensp;&ensp;</p>
+                                </div>
+                            </div>
+                        </div>
 
-            <div class="row float-right">
-              <div class="col-sm-12" style="margin-top: 10px;">
-              <p></p>
-              </div>
-            </div>
+                        <div class="row float-right">
+                            <div class="col-sm-12" style="margin-top: 10px;">
+                                <p></p>
+                            </div>
+                        </div>
 
-            <div class="row float-right">
-              <div class="col-sm-12" style="margin-top: 10px;">
-                <div class="form-inline buttons">
-                  <button class="btn btn-dark" value="Save" id="salvar">
+                        <div class="row float-right">
+                            <div class="col-sm-12" style="margin-top: 10px;">
+                                <div class="form-inline buttons">
+                                    <button class="btn btn-dark" value="Save" id="salvar">
                     <i class="fa fa-floppy-o"></i>
                     Salvar
                   </button>
-                  <a href="{% url 'estoque_saida' %}" class="btn btn-danger">
-                    <i class="fa fa-times"></i>
-                    Cancelar
-                  </a>
+                                    <a href="{% url 'estoque_saida' %}" class="btn btn-danger">
+                                        <i class="fa fa-times"></i> Cancelar
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <p id="user">{{ user.username }}</p>
+
+                    </form>
                 </div>
-              </div>
             </div>
-
-            <p id="user">{{ user.username }}</p>
-
-          </form>
-        </div>
-      </div>
-      </section>    
-        <script>        
-          $(document).ready(function() {
-            c = 0
-            var data = new Date();
-            var dia = data.getDate();
-            var mes = data.getMonth();
-            var ano = data.getFullYear();
-            var hora = data.getHours();
-            var min = data.getMinutes();
-            var seg = data.getSeconds();
-            var nota = dia.toString() + (mes+1).toString() + ano.toString() + hora.toString() + min.toString() + seg.toString()
-            $("#id_main-nf").val(nota)
-            $(".help-block").text('*')
-            $("#user").hide()
-            usuario = $("#user").text()
-            $("select option").filter(function() {
-                //may want to use $.trim in here
-                return $(this).text() == usuario;
-              }).prop('selected', true);
-            $("#id_main-usuario").prop("disabled", true);
-            $("#id_main-movimento").prop("disabled", true);
-            $("#id_main-nf").prop("disabled", true);
-            $("#id_estoque-0-saldo").prop("disabled", true);                 
-
-            $("select option").filter(function() {
-                //may want to use $.trim in here
-                return $(this).text() == "saida";
-            }).prop('selected', true);   
-
-            // Insere classe no primeiro item de produto
-              $('#id_estoque-0-produto').addClass('clProduto');
-              $('#id_estoque-0-quantidade').addClass('clQuantidade');
-            
-            $('#add-item').click(function(ev) {
-              ev.preventDefault();
-              count = $('#estoque').children().length;
-              var tmplMarkup = $('#item-estoque').html();
-              var compiledTmpl = tmplMarkup.replace(/__prefix__/g, count);
-              $('div#estoque').append(compiledTmpl);
-
-              // update form count
-              $('#id_estoque-TOTAL_FORMS').attr('value', count + 1);
-
-              // some animate to scroll to view our new form
-              $('html, body').animate({
-                scrollTop: $("#add-item").position().top - 200
-              }, 800);
-
-              $('#id_estoque-' + (count) + '-produto').addClass('clProduto');
-              $('#id_estoque-' + (count) + '-quantidade').addClass('clQuantidade');
-              $("#id_estoque-" + count + "-saldo").prop("disabled", true);       
-            });
-
-          let estoque
-          let saldo
-          let campo
-          let quantidade
-
-          $(document).on('change', '.clProduto', function() {
-            let self = $(this)
-            let pk = $(this).val()
-            let url = '/products/' + pk + '/json/'
-
-            $.ajax({
-              url: url,
-              type: 'GET',
-              success: function(response) {
-                estoque = response.data[0].estoque
-                campo = self.attr('id').replace('produto', 'quantidade')
-                // Remove o valor do campo 'quantidade'
-                $('#'+campo).val('')
-              },
-              error: function(xhr) {
-                // body...
-              }
-            })
-          });
-
-          $(document).on('change', '.clQuantidade', function() {
-            quantidade = $(this).val();
-            saldo = Number(estoque) - Number(quantidade);
-            campo = $(this).attr('id').replace('quantidade', 'saldo')
-            // Atribui o saldo ao campo 'saldo'
-            $('#'+campo).val(saldo)
-          });
-
-          $('#salvar').click(function(){            
-              $("#id_main-usuario").prop("disabled", false);
-              $("#id_main-movimento").prop("disabled", false);
-              $("#id_estoque-0-saldo").prop("disabled", false);
-              $("#id_main-nf").prop("disabled", false);
-              c = 0
-              while(c<=count){
-                $("#id_estoque-" + c + "-saldo").prop("disabled", false);
-                c = c + 1
-              }              
-            });
-          });
-        </script>
+        </section>
 
         <script type="text/html" id="item-estoque">
-          <div id="item-__prefix__" class="form-group">
-            {{ formset.empty_form|bootstrap }}
-            <p>&ensp;&ensp;</p>
-          </div>
+            <div id="item-__prefix__" class="form-group">
+                {{ formset.empty_form|bootstrap }}
+                <p>&ensp;&ensp;</p>
+            </div>
         </script>
     </body>
-    <style>
-      
-      form{
-        transform: translate(0%, 0%);
-      }
-      .row{
-        justify-content: center;
-        align-items: center;
-      }
-      .jumbotron {
-        padding-top: 0rem;
-        padding-bottom: 0rem;
-      }
-      .form-control{
-        margin: 10px;
-        margin-right: 0px;
-      }
-      .form-inline{
-        justify-content: center;
-        align-items: center;
-      }
-      .help-block{
-        color: red;
-      }
-      .control-label{
-        margin-left: 10px;
-      }
-      .checkbox{
-        margin: 10px;
-      }
-      
-  </style>
+
+</html>

@@ -9,6 +9,7 @@ from .models import Produto, Estoque, EstoqueItens, EstoqueEntrada, EstoqueSaida
 from .forms import ProdutoForm, EstoqueForm, EstoqueItensForm
 from django.http import HttpResponseRedirect
 from django.forms import inlineformset_factory
+from django.views.generic import ListView, DetailView
 
 
 # Create your views here.
@@ -42,6 +43,9 @@ def logout_user(request):
 @login_required(login_url='/login')
 def produto_list(request):
     objects = Produto.objects.all()
+    search = request.GET.get('search')
+    if search:
+        objects = objects.filter(nome__icontains=search)
     context = {'object_list': objects}
     return render (request, 'app/produto_list.html', context)
 
@@ -91,12 +95,22 @@ def set_produto(request):
     url = '/products/{}' .format(produto.id)
     return redirect(url)
 
-@login_required(login_url='/login')
-def estoque_entrada_list(request):
+# @login_required(login_url='/login')
+# def estoque_entrada_list(request):
+#     template_name = 'app/estoque_entrada_list.html'
+#     objects = EstoqueEntrada.objects.all()
+#     context={'object_list': objects}
+#     return render(request, template_name, context)
+
+class EstoqueEntradaList(ListView):
+    model = EstoqueEntrada
     template_name = 'app/estoque_entrada_list.html'
-    objects = EstoqueEntrada.objects.all()
-    context={'object_list': objects}
-    return render(request, template_name, context)
+
+    def get_context_data(self, **kwargs):
+        context = super(EstoqueEntradaList, self).get_context_data(**kwargs)
+        context['titulo'] = 'Entrada'
+        context['url_add'] = 'estoque_entrada_add'
+        return context
 
 @login_required(login_url='/login')
 def estoque_entrada_detail(request, id):
@@ -104,6 +118,15 @@ def estoque_entrada_detail(request, id):
     obj = EstoqueEntrada.objects.get(id=id)
     context={'object': obj}
     return render(request, template_name, context)
+
+class EstoqueEntradaDetail(DetailView):
+    model = EstoqueEntrada
+    template_name = 'app/estoque_entrada_detail.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(EstoqueEntradaDetail, self).get_context_data(**kwargs)
+        context['url_list'] = 'estoque_entrada'
+        return context
 
 @login_required(login_url='/login')
 def estoque_entrada_add(request):
@@ -114,6 +137,7 @@ def estoque_entrada_add(request):
         EstoqueItens,
         form=EstoqueItensForm,
         extra=0,
+        can_delete=False,
         min_num=1,
         validate_min=True,
     )
@@ -126,6 +150,8 @@ def estoque_entrada_add(request):
         )
         if form.is_valid() and formset.is_valid():
             form = form.save()
+            form.movimento='e'
+            form.save()
             formset.save()
             dar_baixa_estoque(form)
             url = 'estoque_entrada_detail'
@@ -151,12 +177,22 @@ def dar_baixa_estoque(form):
         produto.quantidade = item.saldo
         produto.save()
 
-@login_required(login_url='/login')
-def estoque_saida_list(request):
+# @login_required(login_url='/login')
+# def estoque_saida_list(request):
+#     template_name = 'app/estoque_saida_list.html'
+#     objects = EstoqueSaida.objects.all()
+#     context={'object_list': objects}
+#     return render(request, template_name, context)
+
+class EstoqueSaidaList(ListView):
+    model = EstoqueSaida
     template_name = 'app/estoque_saida_list.html'
-    objects = EstoqueSaida.objects.all()
-    context={'object_list': objects}
-    return render(request, template_name, context)
+
+    def get_context_data(self, **kwargs):
+        context = super(EstoqueSaidaList, self).get_context_data(**kwargs)
+        context['titulo'] = 'Saida'
+        context['url_add'] = 'estoque_saida_add'
+        return context
 
 @login_required(login_url='/login')
 def estoque_saida_detail(request, id):
@@ -174,6 +210,7 @@ def estoque_saida_add(request):
         EstoqueItens,
         form=EstoqueItensForm,
         extra=0,
+        can_delete=False,
         min_num=1,
         validate_min=True,
     )
@@ -186,6 +223,8 @@ def estoque_saida_add(request):
         )
         if form.is_valid() and formset.is_valid():
             form = form.save()
+            form.movimento='s'
+            form.save()
             formset.save()
             dar_baixa_estoque(form)
             url = 'estoque_saida_detail'
