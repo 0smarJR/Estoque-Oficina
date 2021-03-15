@@ -17,43 +17,13 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     
 
-    <title>GG Parafusos - Lista de Produtos</title>
+    <title>GG Parafusos-Peças - Lista de Produtos</title>
 
 </head>
 <body>
 
     <header>
-
-        <nav style="display: flex;" class="navbar navbar-expand-lg navbar-dark bg-dark">
-            <div class="container">
-
-              <a class="navbar-brand" href="{% url 'home' %}"><img src="{% static 'app/img/icn.png' %}" alt="some text" width=65 height=45>Parafusos</a>
-                
-            </div>               
-            
-        </nav>
-
-
-        <nav class="site-header" style="display: flex; flex-flow: row wrap; justify-content: flex-end;">
-            <div class="container d-flex flex-column flex-md-row justify-content-between">
-                <!--<a class="py-2 d-none d-md-inline-block" href="{% url 'home' %}">Home</a>-->
-                <a class="py-2 d-none d-md-inline-block" href="{% url 'products' %}">Produtos</a>
-                <a class="py-2 d-none d-md-inline-block" href="{% url 'estoque_entrada' %}">Entrada de Produtos</a>
-                <a class="py-2 d-none d-md-inline-block" href="{% url 'estoque_saida' %}">Saída de Produtos</a>
-                {% if user.is_authenticated %}
-                <div class="dropdown">
-                  <a class="py-2 d-none d-md-inline-block" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> Olá, {{ user.username}}</a>
-                    <div class="dropdown-menu" aria-labelledby="dropdownMenuLink" style="margin: 0px;">
-                      <a class="dropdown-item" href="#" style="color: black;">Perfil</a>
-                      <a class="dropdown-item" href="{% url 'logout' %}" style="color: black;">Log out</a>
-                    </div>
-                  </div>
-                  {% endif %}
-                </div>
-
-            </div>
-        </nav>
-
+        {% include "app/header.html"  %}
     </header>
   <body>
     <main role="main">
@@ -65,8 +35,7 @@
           </div>
           <div><br></div>
             <div>
-              <div class="">
-                <form action="." method="GET" class="" style="text-align:center">
+                <form action="." method="GET">
                 <div class="">
                   <input type="text" id="search" name="search" placeholder="Buscar Produto" class="form-control"></input>
                 </div>
@@ -74,7 +43,6 @@
                   <input type="submit" class="btn btn-dark" value="Buscar" style="margin-top: -66px"></input>
                 </div>
                 </form>
-              </div>
                 {% if object_list %}
                 <table class="table table-striped">
                     <thead>
@@ -128,5 +96,4 @@
     <script src="{% static 'app/js/popper.min.js'%}"></script>
     <script src="{% static 'app/js/bootstrap.min.js'%}"></script>
   </body>
-
-</html
+</html>

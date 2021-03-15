@@ -77,3 +77,11 @@ footer p {
 .no{
     color: red;
 }
+
+.mini-nav{
+    background-color: red;
+}
+
+.mini-nav a{
+    color: white
+}

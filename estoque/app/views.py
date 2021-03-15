@@ -33,6 +33,9 @@ def submit_login(request):
 @login_required(login_url='/login')
 def home(request):
     objects = Produto.objects.all()
+    search = request.GET.get('search')
+    if search:
+        objects = objects.filter(nome__icontains=search)
     context = {'object_list': objects}
     return render (request, 'app/produto_list.html', context)
 
