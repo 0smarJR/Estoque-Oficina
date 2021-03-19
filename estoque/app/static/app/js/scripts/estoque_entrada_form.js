@@ -19,15 +19,10 @@ $(document).ready(function() {
     $("#id_main-usuario").prop("disabled", true);
     $("#id_main-nf").prop("disabled", true);
     $("#id_estoque-0-saldo").prop("disabled", true);
-    $('#id_estoque-0-saldo').after('<input id="id_estoque-0-inicial" class="form-control" type="hidden"></input>');
 
     // Insere classe no primeiro item de produto
     $('#id_estoque-0-produto').addClass('clProduto');
     $('#id_estoque-0-quantidade').addClass('clQuantidade');
-    $('.clProduto').select2()
-    $('.control-label').each(function (index) {
-        $(this).css("margin", "10px")
-    })
 
     $('#add-item').click(function(ev) {
         ev.preventDefault();
@@ -47,11 +42,6 @@ $(document).ready(function() {
         $('#id_estoque-' + (count) + '-produto').addClass('clProduto');
         $('#id_estoque-' + (count) + '-quantidade').addClass('clQuantidade');
         $("#id_estoque-" + count + "-saldo").prop("disabled", true);
-        $('#id_estoque-'+ count +'-saldo').after('<input id="id_estoque-' + count + '-inicial" class="form-control" type="hidden"></input>');
-        $('.clProduto').select2()
-        $('.control-label').each(function (index) {
-            $(this).css("margin", "10px")
-        })
     });
 
     let estoque
@@ -70,8 +60,6 @@ $(document).ready(function() {
             success: function(response) {
                 estoque = response.data[0].estoque
                 campo = self.attr('id').replace('produto', 'quantidade')
-                estoque_inicial = self.attr('id').replace('produto', 'inicial')
-                $('#'+estoque_inicial).val(estoque)
                     // Remove o valor do campo 'quantidade'
                 $('#' + campo).val('')
             },
@@ -83,11 +71,9 @@ $(document).ready(function() {
 
     $(document).on('change', '.clQuantidade', function() {
         quantidade = $(this).val();
+        saldo = Number(quantidade) + Number(estoque);
         campo = $(this).attr('id').replace('quantidade', 'saldo')
-        campo_estoque_inicial = $(this).attr('id').replace('quantidade', 'inicial')
-        estoque_inicial = $('#'+campo_estoque_inicial).val()
-        saldo = Number(quantidade) + Number(estoque_inicial);
-        // Atribui o saldo ao campo 'saldo'
+            // Atribui o saldo ao campo 'saldo'
         $('#' + campo).val(saldo)
     });
 

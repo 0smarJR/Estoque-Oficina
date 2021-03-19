@@ -29,7 +29,7 @@
     <main role="main">
 
         <section class="jumbotron text-center">
-          <div class="page-header" style="z-index:2">
+          <div class="page-header">
             <h1>Produtos</h1>
             <span class=""><a href="{% url 'produto_register' %}"><button type="button" class="btn btn-dark"><span class="fa fa-plus"></span> Adicionar</button></a></span>
           </div>
@@ -37,7 +37,7 @@
             <div>
                 <form action="." method="GET">
                 <div class="">
-                  <input value="" type="text" id="search" name="search" placeholder="Buscar Produto" class="form-control"></input>
+                  <input type="text" id="search" name="search" placeholder="Buscar Produto" class="form-control"></input>
                 </div>
                 <div class="text-right">
                   <input type="submit" class="btn btn-dark" value="Buscar" style="margin-top: -66px"></input>
@@ -72,37 +72,25 @@
                             {% endif %}
                           </td>
                           <td><span class=""><a href="/products/register/?id={{ object.id }}"><button type="button" class="btn btn-dark"><span class="fa fa-pencil"></span></button></a></span>
-                            <span class=""><button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modal_confirm"><span class="fa fa-trash"></span></button></span></td>
-                            <div class="modal fade" id="modal_confirm">
-                            <div class="modal-dialog modal-dialog-centered">
-                              <div class="modal-content">      
-                                <!-- Modal Header -->
-                                <div class="modal-header">
-                                  <h4 class="modal-title">Deseja realmente excluir?</h4>
-                                  <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                </div>        
-                                <!-- Modal body -->
-                                <div class="modal-body text-right">
-                                    <a href="/products/delete/{{ object.id }}/">
-                                        <button type="button" class="btn btn-danger">EXCLUIR</button>
-                                    </a>
-                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">CANCELAR</button>
-                                </div>               
-                              </div>
-                            </div>
-                          </div>
+                            <span class=""><a href="/products/delete/{{ object.id }}"><button type="button" class="btn btn-danger"><span class="fa fa-trash"></span></button></a></span></td>
                         </tr>
                       {% endfor %}
                     </tbody>
                   </table>
                 {% else %}
-                  <p class="alert alert-danger">Sem itens na lista.</p>
+                  <p class="alert alert-warning">Sem itens na lista.</p>
                 {% endif %}
             </div>
-          {% include "app/paginacao.html"  %}
         </section>
 
     </main>
+    <footer class="text-muted">
+        <div class="container">
+            <p class="float-right">
+                <a href="#">Back to top</a>
+            </p>
+        </div>
+    </footer>
 
     <script src="{% static 'app/js/jquery-3.4.1.min.js' %}"></script>
     <script src="{% static 'app/js/popper.min.js'%}"></script>

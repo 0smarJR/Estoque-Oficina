@@ -7,8 +7,8 @@ urlpatterns = [
     path('login/', views.login_user, name='login'),
     path('login/submit', views.submit_login),
     path('logout/', views.logout_user, name='logout'),
-    path('', views.ProdutoList.as_view(), name='home'),
-    path('products/', views.ProdutoList.as_view(), name='products'),
+    path('', views.home, name='home'),
+    path('products/', views.produto_list, name='products'),
     path('products/<int:id>/', views.produto, name='produto'),
     path('products/register/', views.produto_register, name='produto_register'),
     path('products/register/submit', views.set_produto),
@@ -20,7 +20,4 @@ urlpatterns = [
     path('estoque/saida/', views.EstoqueSaidaList.as_view(), name='estoque_saida'),
     path('estoque/saida/<int:id>/', views.estoque_saida_detail, name='estoque_saida_detail'),
     path('estoque/saida/add/', views.estoque_saida_add, name='estoque_saida_add'),
-    path('usuario/registrar/', views.UsuarioCadastro.as_view(), name='usuario_registrar'),
-    path('usuario/editar/<int:pk>', views.UsuarioUpdate.as_view()),
-    path('usuario/deletar/<int:pk>', views.usuario_delete),
 ]

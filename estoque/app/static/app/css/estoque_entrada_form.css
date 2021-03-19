@@ -1,3 +1,7 @@
+form {
+    transform: translate(0%, 0%);
+}
+
 .row {
     justify-content: center;
     align-items: center;
@@ -8,22 +12,24 @@
     padding-bottom: 0rem;
 }
 
+.form-control {
+    margin: 10px;
+    margin-right: 0px;
+}
 
 .form-inline {
     justify-content: center;
     align-items: center;
-    display: block;
-    max-width: 930px;
 }
 
 .help-block {
     color: red;
 }
 
-.checkbox {
-    margin: 10px;
+.control-label {
+    margin-left: 10px;
 }
 
-.quebra{
-    display: block;
+.checkbox {
+    margin: 10px;
 }
