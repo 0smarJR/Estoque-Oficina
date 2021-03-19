@@ -44,7 +44,25 @@
                 </div>
                 </form>
                 {% if object_list %}
-                <table class="table table-striped">
+                <div class="modal fade" id="modal_confirm">
+                            <div class="modal-dialog modal-dialog-centered">
+                              <div class="modal-content">      
+                                <!-- Modal Header -->
+                                <div class="modal-header">
+                                  <h4 class="modal-title">Deseja realmente excluir?</h4>
+                                  <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                </div>        
+                                <!-- Modal body -->
+                                <div class="modal-body text-right">
+                                    <a id="botao" href="">
+                                        <button type="button" class="btn btn-danger">EXCLUIR</button>
+                                    </a>
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">CANCELAR</button>
+                                </div>               
+                              </div>
+                            </div>
+                          </div>
+                <table id="tabela" class="table table-striped">
                     <thead>
                       <tr>
                         <th>ID</th>
@@ -72,7 +90,11 @@
                             {% endif %}
                           </td>
                           <td><span class=""><a href="/products/register/?id={{ object.id }}"><button type="button" class="btn btn-dark"><span class="fa fa-pencil"></span></button></a></span>
+<<<<<<< HEAD
                             <span class=""><a href="/products/delete/{{ object.id }}"><button type="button" class="btn btn-danger"><span class="fa fa-trash"></span></button></a></span></td>
+=======
+                            <span class=""><button name="{{ object.id }}" excluir='true' type="button" class="btn btn-danger" data-toggle="modal" data-target="#modal_confirm"><span class="fa fa-trash"></span></button></span></td>
+>>>>>>> 8a160e2172e923d5b725aa7141db304c62b718a6
                         </tr>
                       {% endfor %}
                     </tbody>
@@ -81,7 +103,23 @@
                   <p class="alert alert-warning">Sem itens na lista.</p>
                 {% endif %}
             </div>
+<<<<<<< HEAD
         </section>
+=======
+          {% include "app/paginacao.html"  %}
+      </section>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+
+    <script>
+    $(document).ready(function(){
+        $("#tabela").find("button[excluir='true']").click(function(){
+          href = '/products/delete/'+$(this).attr("name")+'/'
+          $('#botao').prop('href', href);
+        });
+    });
+    </script>
+>>>>>>> 8a160e2172e923d5b725aa7141db304c62b718a6
 
     </main>
     <footer class="text-muted">

@@ -20,4 +20,12 @@ urlpatterns = [
     path('estoque/saida/', views.EstoqueSaidaList.as_view(), name='estoque_saida'),
     path('estoque/saida/<int:id>/', views.estoque_saida_detail, name='estoque_saida_detail'),
     path('estoque/saida/add/', views.estoque_saida_add, name='estoque_saida_add'),
+<<<<<<< HEAD
+=======
+    path('usuario/registrar/', views.UsuarioCadastro.as_view(), name='usuario_registrar'),
+    path('usuario/editar/<int:pk>', views.UsuarioUpdate.as_view()),
+    path('usuario/deletar/<int:pk>/', views.usuario_delete),
+    path('usuarios/', views.UsuariosList.as_view(), name='users')
+
+>>>>>>> 8a160e2172e923d5b725aa7141db304c62b718a6
 ]

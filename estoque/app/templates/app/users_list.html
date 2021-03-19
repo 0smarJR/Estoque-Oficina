@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    {% load static %}
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" type="text/css" href="{% static 'app/css/bootstrap/bootstrap.min.css' %}">
+    <!-- CSS -->
+    <link rel="stylesheet" type="text/css" href="{% static 'app/css/produto.css' %}">
+    <!-- Favicon -->
+    <link rel="icon" href="{% static 'app/img/icn.png' %}">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    
+
+    <title>GG Parafusos-Peças - Lista de Usuarios</title>
+
+</head>
+<body>
+
+    <header>
+        {% include "app/header.html"  %}
+    </header>
+  <body>
+    <main role="main">
+
+        <section class="jumbotron text-center">
+          <div class="page-header" style="z-index:2">
+            <h1>Usuários</h1>
+            <span class=""><a href="{% url 'usuario_registrar' %}"><button type="button" class="btn btn-dark"><span class="fa fa-plus"></span> Adicionar</button></a></span>
+          </div>
+          <div><br></div>
+            <div>
+                <form action="." method="GET">
+                <div class="">
+                  <input value="" type="text" id="search" name="search" placeholder="Buscar Usuario" class="form-control"></input>
+                </div>
+                <div class="text-right">
+                  <input type="submit" class="btn btn-dark" value="Buscar" style="margin-top: -66px"></input>
+                </div>
+                </form>
+                {% if object_list %}
+                <div class="modal fade" id="modal_confirm">
+                            <div class="modal-dialog modal-dialog-centered">
+                              <div class="modal-content">      
+                                <!-- Modal Header -->
+                                <div class="modal-header">
+                                  <h4 class="modal-title">Deseja realmente excluir?</h4>
+                                  <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                </div>        
+                                <!-- Modal body -->
+                                <div class="modal-body text-right">
+                                    <a id="botao" href="">
+                                        <button type="button" class="btn btn-danger">EXCLUIR</button>
+                                    </a>
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">CANCELAR</button>
+                            </div>               
+                        </div>
+                    </div>
+                </div>
+                <table id="tabela" class="table table-striped">
+                    <thead>
+                      <tr>
+                        <th>ID</th>
+                        <th>Usuário</th>
+                        <th>Nome</th>
+                        <th>Ativo</th>
+                        <th>Admin</th>
+                        <th>Ações</th>
+                      </tr>
+                      
+                    </thead>
+                    <tbody>
+                      {% for object in object_list %}
+                        <tr>
+                          <td>{{ object.id }}</td>
+                          <td><a href="">{{ object.username }}</a></td>
+                          <td>{{ object.first_name }} {{ object.last_name }}</td>
+                          <td>
+                            {% if object.is_active %}
+                              <i class="fa fa-check-circle ok"></i>
+                            {% else %}
+                              <i class="fa fa-minus-circle no"></i>
+                            {% endif %}
+                          </td>
+                          <td>
+                            {% if object.is_superuser %}
+                              <i class="fa fa-check-circle ok"></i>
+                            {% else %}
+                              <i class="fa fa-minus-circle no"></i>
+                            {% endif %}
+                          </td>
+                          <td><span class=""><a href="/usuario/editar/{{ object.id }}"><button type="button" class="btn btn-dark"><span class="fa fa-pencil"></span></button></a></span>
+                            <span class=""><button name="{{ object.id }}" type="button" class="btn btn-danger" excluir='true' data-toggle="modal" data-target="#modal_confirm"><span class="fa fa-trash"></span></button></span></td>
+                        </tr>
+                      {% endfor %}
+                    </tbody>
+                  </table>
+                {% else %}
+                  <p class="alert alert-danger">Sem itens na lista.</p>
+                {% endif %}
+            </div>
+          {% include "app/paginacao.html"  %}
+        </section>
+
+    </main>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+
+    <script>
+    $(document).ready(function(){
+        $("#tabela").find("button[excluir='true']").click(function(){
+          href = '/usuario/deletar/'+$(this).attr("name")+'/'
+          $('#botao').prop('href', href);
+        });
+    });
+    </script>
+
+    <script src="{% static 'app/js/jquery-3.4.1.min.js' %}"></script>
+    <script src="{% static 'app/js/popper.min.js'%}"></script>
+    <script src="{% static 'app/js/bootstrap.min.js'%}"></script>
+  </body>
+</html>

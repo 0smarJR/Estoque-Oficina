@@ -237,4 +237,64 @@ def estoque_saida_add(request):
         formset = item_estoque_formset(instance=estoque_form, prefix='estoque')
 
     context = {'form': form, 'formset': formset}
+<<<<<<< HEAD
     return render(request, template_name, context)
+=======
+    return render(request, template_name, context)
+
+class ProdutoList(LoginRequiredMixin, ListView):
+    model = Produto
+    template_name = 'app/produto_list.html'
+    paginate_by = 10
+
+    def get_queryset(self):
+        query = self.request.GET.get('search')
+        if query:
+            object_list = self.model.objects.filter(nome__icontains=query)
+        else:
+            object_list = self.model.objects.all()
+        return object_list
+
+class UsuarioCadastro(CreateView):
+    template_name = 'app/cadastro_usuario.html'
+    form_class = UsuarioForm
+    success_url = reverse_lazy('users')
+
+    def get_context_data(self, *args, **kwargs):
+        context = super().get_context_data(*args, **kwargs)
+        context['titulo'] = "Cadastrar Usuário"
+        context['botao'] = "Cadastrar"
+        return context
+
+class UsuarioUpdate(UpdateView):
+    template_name = 'app/cadastro_usuario.html'
+    model = User
+    fields = ['first_name', 'last_name', 'username', 'email', 'is_superuser']
+    success_url = reverse_lazy('users')
+
+    def get_context_data(self, *args, **kwargs):
+        context = super().get_context_data(*args, **kwargs)
+        context['titulo'] = "Editar Usuário"
+        context['botao'] = "Editar"
+        return context
+
+@login_required(login_url='/login')
+def usuario_delete(request, pk):
+    user = User.objects.get(pk=pk)
+    user.delete()
+    return redirect('/usuarios')
+
+class UsuariosList(LoginRequiredMixin, ListView):
+    model = User
+    template_name = 'app/users_list.html'
+    paginate_by = 10
+
+    def get_queryset(self):
+        query = self.request.GET.get('search')
+        if query:
+            object_list = self.model.objects.filter(username__icontains=query)
+
+        else:
+            object_list = self.model.objects.all()
+        return object_list
+>>>>>>> 8a160e2172e923d5b725aa7141db304c62b718a6
