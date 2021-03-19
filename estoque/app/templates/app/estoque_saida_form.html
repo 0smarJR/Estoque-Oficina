@@ -11,16 +11,20 @@
     <link rel="stylesheet" type="text/css" href="{% static 'app/css/bootstrap/bootstrap.min.css' %}">
     <!-- CSS -->
     <link rel="stylesheet" type="text/css" href="{% static 'app/css/produto.css' %}">
-    <link rel="stylesheet" type="text/css" href="{% static 'app/css/estoque_saida_form.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'app/css/estoque_form.css' %}">
     <!-- Favicon -->
     <link rel="icon" href="{% static 'app/img/icn.png' %}">
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!-- Select2 -->
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
     <script src="{% static 'app/js/popper.min.js'%}"></script>
     <script src="{% static 'app/js/bootstrap.min.js'%}"></script>
     <script src="{% static 'app/js/scripts/estoque_saida_form.js'%}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
     <style></style>
 
     {% load widget_tweaks %} {% load bootstrap %}
@@ -70,7 +74,6 @@
                                         {{ item_estoque_form|bootstrap }} <br>
                                     </div>
                                     {% endfor %}
-                                    <p>&ensp;&ensp;</p>
                                 </div>
                             </div>
                         </div>
@@ -105,7 +108,6 @@
         <script type="text/html" id="item-estoque">
             <div id="item-__prefix__" class="form-group">
                 {{ formset.empty_form|bootstrap }}
-                <p>&ensp;&ensp;</p>
             </div>
         </script>
     </body>

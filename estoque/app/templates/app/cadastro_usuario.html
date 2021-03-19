@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    {% load static %}
+    {% load crispy_forms_tags %}
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" type="text/css" href="{% static 'app/css/bootstrap/bootstrap.min.css' %}">
+    <!-- CSS -->
+    <link rel="stylesheet" type="text/css" href="{% static 'app/css/produto.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'app/css/cadastro_usuario.css' %}">
+    <!-- Favicon -->
+    <link rel="icon" href="{% static 'app/img/icn.png' %}">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    
+
+    <title>GG Parafusos-Peças - {{ titulo }}</title>
+
+</head>
+<body>
+
+    <header>
+        {% include "app/header.html"  %}
+    </header>
+
+        <div class="externo" style="position: relative; width: 100%;">
+            <div class="interno" style="left: 50%; position: absolute; transform: translateX(-50%); display: flex; flex-wrap: wrap; justify-content: center; flex-direction: column; text-align: center;">
+                <h1>{{ titulo }}</h1>
+                <br>
+                <form action="", method="POST">
+                {% csrf_token %}
+                {{form|crispy}}
+
+                <button type="submit" class="btn btn-dark"><span class="fa fa-pencil"></span> {{ botao }}</button>
+                
+                </form>
+            </div>
+        </div>
+    
+        <script src="{% static 'app/js/jquery-3.4.1.min.js' %}"></script>
+        <script src="{% static 'app/js/popper.min.js'%}"></script>
+        <script src="{% static 'app/js/bootstrap.min.js'%}"></script>
+  </body>
+</html>

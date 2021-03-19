@@ -15,15 +15,46 @@
     <link rel="stylesheet" type="text/css" href="{% static 'app/css/login1.css' %}">
     <!-- Favicon -->
     <link rel="icon" href="{% static 'app/img/icn.png' %}">
-
 </head>
 
 <body class="text-center">
+    <div id="element"> </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r121/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.waves.min.js"></script>
+    <script>
+        VANTA.WAVES({
+            el: "#element",
+            mouseControls: true,
+            touchControls: true,
+            gyroControls: false,
+            minHeight: 200.00,
+            minWidth: 200.00,
+            scale: 1.00,
+            scaleMobile: 1.00,
+            color: 0x7a7a7a,
+            shininess: 17.00,
+            waveHeight: 8.00,
+            waveSpeed: 1.20,
+            zoom: 0.75
+        })
+    </script>
     <form class="form-signin" action="submit" method="post"> {% csrf_token %}
         <div class="logo">
-        <img src="{% static 'app/img/icone.png' %}" alt="">
+        <img src="{% static 'app/img/icn.png' %}" alt="">
         </div>
         <h1 class="font-weight-bold parafusos-pecas">Parafusos-Peças</h1>
+        {% for message in messages %}
+        <div class="col-sm">
+        </div>
+        <div class="col-sm">
+            <div class="checkbox mb-3">
+                <!-- apagar dps -->
+            </div>
+        </div>
+        <div class="alert alert-danger" role="alert">
+            <strong>{{ message }}</strong> 
+        </div>
+        {% endfor %}
         <div class="col-sm">
             <div class="checkbox mb-3">
                 <!-- apagar dps -->
@@ -45,19 +76,7 @@
         </div>
         <button class="btn btn-lg btn-danger btn-block" type="submit">Entrar</button>
         
-        {% for message in messages %}
-        <div class="col-sm">
-        </div>
-        <div class="col-sm">
-            <div class="checkbox mb-3">
-                <!-- apagar dps -->
-            </div>
-        </div>
-        <div class="alert alert-primary" role="alert">
-            <strong>{{ message }}</strong> 
-        </div>
-        {% endfor %}
-        <p class="mt-5 mb-3 text-muted">&copy; GG Parafusos</p>
+        <p class="mt-5 mb-3" style="color: black;">&copy; GG Parafusos</p>
     </form>
 
     <!-- Optional JavaScript -->

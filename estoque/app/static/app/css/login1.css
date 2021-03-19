@@ -53,3 +53,15 @@ body {
 .parafusos-pecas{
   font-size: 39px;
 }
+
+#element{
+  display: block;
+  position: absolute;
+  width: 100%;
+  height: 100vh;
+  z-index:1;
+}
+
+form{
+  z-index: 3;
+}
