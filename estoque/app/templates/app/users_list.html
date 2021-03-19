@@ -17,7 +17,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     
 
-    <title>GG Parafusos-Peças - Lista de Produtos</title>
+    <title>GG Parafusos-Peças - Lista de Usuarios</title>
 
 </head>
 <body>
@@ -30,14 +30,14 @@
 
         <section class="jumbotron text-center">
           <div class="page-header" style="z-index:2">
-            <h1>Produtos</h1>
-            <span class=""><a href="{% url 'produto_register' %}"><button type="button" class="btn btn-dark"><span class="fa fa-plus"></span> Adicionar</button></a></span>
+            <h1>Usuários</h1>
+            <span class=""><a href="{% url 'usuario_registrar' %}"><button type="button" class="btn btn-dark"><span class="fa fa-plus"></span> Adicionar</button></a></span>
           </div>
           <div><br></div>
             <div>
                 <form action="." method="GET">
                 <div class="">
-                  <input value="" type="text" id="search" name="search" placeholder="Buscar Produto" class="form-control"></input>
+                  <input value="" type="text" id="search" name="search" placeholder="Buscar Usuario" class="form-control"></input>
                 </div>
                 <div class="text-right">
                   <input type="submit" class="btn btn-dark" value="Buscar" style="margin-top: -66px"></input>
@@ -58,39 +58,44 @@
                                         <button type="button" class="btn btn-danger">EXCLUIR</button>
                                     </a>
                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">CANCELAR</button>
-                                </div>               
-                              </div>
-                            </div>
-                          </div>
+                            </div>               
+                        </div>
+                    </div>
+                </div>
                 <table id="tabela" class="table table-striped">
                     <thead>
                       <tr>
                         <th>ID</th>
+                        <th>Usuário</th>
                         <th>Nome</th>
-                        <th>Marca</th>
-                        <th>Preço</th>
-                        <th class="text-center">Quantidade</th>
                         <th>Ativo</th>
+                        <th>Admin</th>
                         <th>Ações</th>
                       </tr>
+                      
                     </thead>
                     <tbody>
                       {% for object in object_list %}
                         <tr>
                           <td>{{ object.id }}</td>
-                          <td><a href="{% url 'produto' object.id %}">{{ object.nome }}</a></td>
-                          <td>{{ object.marca }}</td>
-                          <td>R$ {{ object.preco }}</span></td>
-                          <td class="text-center">{{ object.quantidade }}</td>
+                          <td><a href="">{{ object.username }}</a></td>
+                          <td>{{ object.first_name }} {{ object.last_name }}</td>
                           <td>
-                            {% if object.ativo %}
+                            {% if object.is_active %}
                               <i class="fa fa-check-circle ok"></i>
                             {% else %}
                               <i class="fa fa-minus-circle no"></i>
                             {% endif %}
                           </td>
-                          <td><span class=""><a href="/products/register/?id={{ object.id }}"><button type="button" class="btn btn-dark"><span class="fa fa-pencil"></span></button></a></span>
-                            <span class=""><button name="{{ object.id }}" excluir='true' type="button" class="btn btn-danger" data-toggle="modal" data-target="#modal_confirm"><span class="fa fa-trash"></span></button></span></td>
+                          <td>
+                            {% if object.is_superuser %}
+                              <i class="fa fa-check-circle ok"></i>
+                            {% else %}
+                              <i class="fa fa-minus-circle no"></i>
+                            {% endif %}
+                          </td>
+                          <td><span class=""><a href="/usuario/editar/{{ object.id }}"><button type="button" class="btn btn-dark"><span class="fa fa-pencil"></span></button></a></span>
+                            <span class=""><button name="{{ object.id }}" type="button" class="btn btn-danger" excluir='true' data-toggle="modal" data-target="#modal_confirm"><span class="fa fa-trash"></span></button></span></td>
                         </tr>
                       {% endfor %}
                     </tbody>
@@ -100,20 +105,20 @@
                 {% endif %}
             </div>
           {% include "app/paginacao.html"  %}
-      </section>
+        </section>
+
+    </main>
 
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 
     <script>
     $(document).ready(function(){
         $("#tabela").find("button[excluir='true']").click(function(){
-          href = '/products/delete/'+$(this).attr("name")+'/'
+          href = '/usuario/deletar/'+$(this).attr("name")+'/'
           $('#botao').prop('href', href);
         });
     });
     </script>
-
-    </main>
 
     <script src="{% static 'app/js/jquery-3.4.1.min.js' %}"></script>
     <script src="{% static 'app/js/popper.min.js'%}"></script>

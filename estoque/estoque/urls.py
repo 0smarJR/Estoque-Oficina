@@ -22,5 +22,7 @@ urlpatterns = [
     path('estoque/saida/add/', views.estoque_saida_add, name='estoque_saida_add'),
     path('usuario/registrar/', views.UsuarioCadastro.as_view(), name='usuario_registrar'),
     path('usuario/editar/<int:pk>', views.UsuarioUpdate.as_view()),
-    path('usuario/deletar/<int:pk>', views.usuario_delete),
+    path('usuario/deletar/<int:pk>/', views.usuario_delete),
+    path('usuarios/', views.UsuariosList.as_view(), name='users')
+
 ]

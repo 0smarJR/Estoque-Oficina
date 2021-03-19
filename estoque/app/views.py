@@ -260,7 +260,7 @@ class ProdutoList(LoginRequiredMixin, ListView):
 class UsuarioCadastro(CreateView):
     template_name = 'app/cadastro_usuario.html'
     form_class = UsuarioForm
-    success_url = reverse_lazy('products')
+    success_url = reverse_lazy('users')
 
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args, **kwargs)
@@ -271,7 +271,8 @@ class UsuarioCadastro(CreateView):
 class UsuarioUpdate(UpdateView):
     template_name = 'app/cadastro_usuario.html'
     model = User
-    fields = ['first_name', 'last_name', 'username', 'email', 'password', 'is_superuser']
+    fields = ['first_name', 'last_name', 'username', 'email', 'is_superuser']
+    success_url = reverse_lazy('users')
 
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args, **kwargs)
@@ -283,4 +284,18 @@ class UsuarioUpdate(UpdateView):
 def usuario_delete(request, pk):
     user = User.objects.get(pk=pk)
     user.delete()
-    return redirect('/products')
+    return redirect('/usuarios')
+
+class UsuariosList(LoginRequiredMixin, ListView):
+    model = User
+    template_name = 'app/users_list.html'
+    paginate_by = 10
+
+    def get_queryset(self):
+        query = self.request.GET.get('search')
+        if query:
+            object_list = self.model.objects.filter(username__icontains=query)
+
+        else:
+            object_list = self.model.objects.all()
+        return object_list
